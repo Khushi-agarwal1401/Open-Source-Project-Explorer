@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import BookmarkButton from "@/components/BookmarkButton";
 import type { Project } from "@/data/projects";
 
 export default function ProjectCard({ project }: { project: Project }) {
@@ -11,11 +14,17 @@ export default function ProjectCard({ project }: { project: Project }) {
         <h3 className="font-semibold text-foreground group-hover:underline">
           {project.name}
         </h3>
-        {project.beginnerFriendly && (
-          <span className="shrink-0 rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
-            Beginner Friendly
-          </span>
-        )}
+        <div className="flex items-center gap-2 shrink-0">
+          {project.beginnerFriendly && (
+            <span className="shrink-0 rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
+              Beginner Friendly
+            </span>
+          )}
+          <BookmarkButton
+            projectId={project.id}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
       </div>
       <p className="mt-2 line-clamp-3 flex-1 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
         {project.description}
