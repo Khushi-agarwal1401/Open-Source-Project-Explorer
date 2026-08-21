@@ -18,14 +18,14 @@ export default function Home() {
         </p>
         <Link
           href="/projects"
-          className="rounded-md bg-foreground px-6 py-3 text-sm font-medium text-background transition-opacity hover:opacity-80"
+          className="rounded-md bg-foreground px-6 py-3 text-sm font-medium text-background transition-all duration-200 hover:scale-105 hover:opacity-90 active:scale-95"
         >
           Explore Projects
         </Link>
       </section>
 
       <section className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="rounded-lg border border-zinc-200 p-6 dark:border-zinc-800">
+        <div className="rounded-lg border border-zinc-200 p-6 transition-all duration-300 hover:shadow-md dark:border-zinc-800 dark:hover:shadow-zinc-900/50">
           <p className="text-3xl font-semibold text-foreground">
             {projects.length}
           </p>
@@ -33,7 +33,7 @@ export default function Home() {
             Projects
           </p>
         </div>
-        <div className="rounded-lg border border-zinc-200 p-6 dark:border-zinc-800">
+        <div className="rounded-lg border border-zinc-200 p-6 transition-all duration-300 hover:shadow-md dark:border-zinc-800 dark:hover:shadow-zinc-900/50">
           <p className="text-3xl font-semibold text-foreground">
             {domains.length}
           </p>
@@ -41,7 +41,7 @@ export default function Home() {
             Domains
           </p>
         </div>
-        <div className="rounded-lg border border-zinc-200 p-6 dark:border-zinc-800">
+        <div className="rounded-lg border border-zinc-200 p-6 transition-all duration-300 hover:shadow-md dark:border-zinc-800 dark:hover:shadow-zinc-900/50">
           <p className="text-3xl font-semibold text-foreground">
             {totalStars.toLocaleString()}
           </p>
@@ -60,7 +60,7 @@ export default function Home() {
             <li key={project.id}>
               <Link
                 href={`/projects/${project.id}`}
-                className="flex h-full flex-col rounded-lg border border-zinc-200 p-5 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600"
+                className="flex h-full flex-col rounded-lg border border-zinc-200 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-zinc-400 hover:shadow-md dark:border-zinc-800 dark:hover:border-zinc-600 dark:hover:shadow-zinc-900/50"
               >
                 <h3 className="font-semibold text-foreground">
                   {project.name}

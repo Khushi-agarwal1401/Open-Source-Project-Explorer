@@ -49,7 +49,7 @@ export default function BookmarkButton({ projectId, className = "", size = "md",
   return (
     <button
       onClick={handleClick}
-      className={`${className} relative flex items-center justify-center rounded-lg transition-colors ${buttonSizes[size]} ${
+      className={`${className} relative flex items-center justify-center rounded-lg transition-all duration-200 hover:scale-110 active:scale-95 ${buttonSizes[size]} ${
         bookmarked
           ? "text-amber-500 hover:text-amber-600"
           : "text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"

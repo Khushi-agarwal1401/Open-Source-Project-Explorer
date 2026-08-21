@@ -1,7 +1,7 @@
-import { notFound } from "next/navigation";
 import { projects } from "@/data/projects";
 import Link from "next/link";
 import ProjectDetailHeader from "@/components/ProjectDetailHeader";
+import NotFound from "./not-found";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -32,7 +32,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   const project = projects.find((p) => p.id === id);
 
   if (!project) {
-    notFound();
+    return <NotFound />;
   }
 
   return (

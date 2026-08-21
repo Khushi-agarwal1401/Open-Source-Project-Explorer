@@ -8,7 +8,7 @@ export default function ProjectCard({ project }: { project: Project }) {
   return (
     <Link
       href={`/projects/${project.id}`}
-      className="group flex h-full flex-col rounded-lg border border-zinc-200 p-5 transition-colors hover:border-zinc-400 dark:border-zinc-800 dark:hover:border-zinc-600"
+      className="group flex h-full flex-col rounded-lg border border-zinc-200 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-zinc-400 hover:shadow-md dark:border-zinc-800 dark:hover:border-zinc-600 dark:hover:shadow-zinc-900/50"
     >
       <div className="flex items-start justify-between gap-2">
         <h3 className="font-semibold text-foreground group-hover:underline">

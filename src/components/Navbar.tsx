@@ -17,7 +17,7 @@ export default function Navbar() {
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
         <Link
           href="/"
-          className="text-lg font-semibold tracking-tight text-foreground"
+          className="text-lg font-semibold tracking-tight text-foreground transition-opacity hover:opacity-80"
         >
           Open Source Explorer
         </Link>
