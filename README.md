@@ -60,7 +60,14 @@ Follow these instructions to run the project locally on your machine.
 
 ## Screenshots
 
-*(Note: Add screenshots of the Home page, Projects list, and Saved bookmarks here to showcase the UI!)*
+### Home Page
+![Home Page](public/screenshots/home.png)
+
+### Projects List
+![Projects List](public/screenshots/projects.png)
+
+### Saved Bookmarks
+![Saved Bookmarks](public/screenshots/saved.png)
 
 ## What I Learned
 
