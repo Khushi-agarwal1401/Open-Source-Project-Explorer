@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import ProjectCard from "@/components/ProjectCard";
 import ProjectCardSkeleton from "@/components/ProjectCardSkeleton";
 import SearchBar from "@/components/SearchBar";
@@ -8,10 +9,31 @@ import FilterBar from "@/components/FilterBar";
 import { projects } from "@/data/projects";
 
 export default function ProjectsClient() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  
   const [searchQuery, setSearchQuery] = useState("");
-  const [filters, setFilters] = useState({ domain: "", technology: "", difficulty: "" });
+  const [filters, setFilters] = useState({
+    domain: searchParams.get("domain") || "",
+    technology: "",
+    difficulty: ""
+  });
   const [sortBy, setSortBy] = useState<"stars" | "name">("stars");
   const [isLoading, setIsLoading] = useState(false);
+
+  // Update URL when domain filter changes
+  useEffect(() => {
+    const currentDomain = searchParams.get("domain") || "";
+    if (filters.domain !== currentDomain) {
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      if (filters.domain) {
+        newSearchParams.set("domain", filters.domain);
+      } else {
+        newSearchParams.delete("domain");
+      }
+      router.replace(`?${newSearchParams.toString()}`, { scroll: false });
+    }
+  }, [filters.domain, searchParams, router]);
 
   const filteredProjects = useMemo(() => {
     let result = projects;
@@ -81,6 +103,8 @@ export default function ProjectsClient() {
 
       <FilterBar
         projects={projects}
+        filters={filters}
+        sortBy={sortBy}
         onFilterChange={setFilters}
         onSortChange={setSortBy}
       />

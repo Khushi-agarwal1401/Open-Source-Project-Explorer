@@ -112,12 +112,9 @@ export default function Home() {
             <li key={domain}>
               <Link
                 href={`/projects?domain=${encodeURIComponent(domain)}`}
-                className="group inline-flex items-center gap-2 rounded-full border-2 border-border bg-card-bg px-5 py-2.5 text-sm font-medium text-foreground transition-all duration-200 hover:border-primary hover:bg-primary/10 hover:text-primary"
+                className="inline-flex items-center justify-center rounded-full border-2 border-border bg-card-bg px-5 py-2.5 text-sm font-medium text-foreground transition-colors duration-200 hover:border-black dark:hover:border-white"
               >
                 {domain}
-                <svg className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
               </Link>
             </li>
           ))}

@@ -1,20 +1,18 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import type { Project } from "@/data/projects";
 
 
 interface FilterBarProps {
   projects: Project[];
+  filters: { domain: string; technology: string; difficulty: string };
+  sortBy: "stars" | "name";
   onFilterChange: (filters: { domain: string; technology: string; difficulty: string }) => void;
   onSortChange: (sort: "stars" | "name") => void;
 }
 
-export default function FilterBar({ projects, onFilterChange, onSortChange }: FilterBarProps) {
-  const [selectedDomain, setSelectedDomain] = useState("");
-  const [selectedTechnology, setSelectedTechnology] = useState("");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("");
-  const [sortBy, setSortBy] = useState<"stars" | "name">("stars");
+export default function FilterBar({ projects, filters, sortBy, onFilterChange, onSortChange }: FilterBarProps) {
 
   const domains = useMemo(() => {
     const unique = [...new Set(projects.map((p) => p.domain))].sort();
@@ -29,36 +27,26 @@ export default function FilterBar({ projects, onFilterChange, onSortChange }: Fi
   const difficulties = ["Beginner", "Intermediate", "Advanced"] as const;
 
   const handleDomainChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    setSelectedDomain(value);
-    onFilterChange({ domain: value, technology: selectedTechnology, difficulty: selectedDifficulty });
+    onFilterChange({ ...filters, domain: e.target.value });
   };
 
   const handleTechnologyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    setSelectedTechnology(value);
-    onFilterChange({ domain: selectedDomain, technology: value, difficulty: selectedDifficulty });
+    onFilterChange({ ...filters, technology: e.target.value });
   };
 
   const handleDifficultyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    setSelectedDifficulty(value);
-    onFilterChange({ domain: selectedDomain, technology: selectedTechnology, difficulty: value });
+    onFilterChange({ ...filters, difficulty: e.target.value });
   };
 
   const handleSortChange = (value: "stars" | "name") => {
-    setSortBy(value);
     onSortChange(value);
   };
 
   const clearFilters = () => {
-    setSelectedDomain("");
-    setSelectedTechnology("");
-    setSelectedDifficulty("");
     onFilterChange({ domain: "", technology: "", difficulty: "" });
   };
 
-  const hasActiveFilters = selectedDomain || selectedTechnology || selectedDifficulty;
+  const hasActiveFilters = filters.domain || filters.technology || filters.difficulty;
 
   return (
     <div className="mb-6 space-y-4">
@@ -69,7 +57,7 @@ export default function FilterBar({ projects, onFilterChange, onSortChange }: Fi
           </label>
           <select
             id="domain-filter"
-            value={selectedDomain}
+            value={filters.domain}
             onChange={handleDomainChange}
             className="rounded-lg border border-border bg-card-bg px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:bg-card-bg"
           >
@@ -88,7 +76,7 @@ export default function FilterBar({ projects, onFilterChange, onSortChange }: Fi
           </label>
           <select
             id="tech-filter"
-            value={selectedTechnology}
+            value={filters.technology}
             onChange={handleTechnologyChange}
             className="rounded-lg border border-border bg-card-bg px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:bg-card-bg"
           >
@@ -107,7 +95,7 @@ export default function FilterBar({ projects, onFilterChange, onSortChange }: Fi
           </label>
           <select
             id="difficulty-filter"
-            value={selectedDifficulty}
+            value={filters.difficulty}
             onChange={handleDifficultyChange}
             className="rounded-lg border border-border bg-card-bg px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:bg-card-bg"
           >
