@@ -51,79 +51,99 @@ export default function FilterBar({ projects, onFilterChange, onSortChange }: Fi
     onSortChange(value);
   };
 
+  const clearFilters = () => {
+    setSelectedDomain("");
+    setSelectedTechnology("");
+    setSelectedDifficulty("");
+    onFilterChange({ domain: "", technology: "", difficulty: "" });
+  };
+
+  const hasActiveFilters = selectedDomain || selectedTechnology || selectedDifficulty;
+
   return (
-    <div className="mb-6 flex flex-wrap items-center gap-3">
-      <div className="flex flex-wrap items-center gap-2">
-        <label htmlFor="domain-filter" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-          Domain:
-        </label>
-        <select
-          id="domain-filter"
-          value={selectedDomain}
-          onChange={handleDomainChange}
-          className="rounded-lg border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-900 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:border-zinc-400"
-        >
-          <option value="">All Domains</option>
-          {domains.map((domain) => (
-            <option key={domain} value={domain}>
-              {domain}
-            </option>
-          ))}
-        </select>
+    <div className="mb-6 space-y-4">
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-1 min-w-[200px] flex-col gap-1.5">
+          <label htmlFor="domain-filter" className="text-xs font-semibold uppercase tracking-wide text-muted">
+            Domain
+          </label>
+          <select
+            id="domain-filter"
+            value={selectedDomain}
+            onChange={handleDomainChange}
+            className="rounded-lg border border-border bg-card-bg px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:bg-card-bg"
+          >
+            <option value="">All Domains</option>
+            {domains.map((domain) => (
+              <option key={domain} value={domain}>
+                {domain}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex flex-1 min-w-[200px] flex-col gap-1.5">
+          <label htmlFor="tech-filter" className="text-xs font-semibold uppercase tracking-wide text-muted">
+            Technology
+          </label>
+          <select
+            id="tech-filter"
+            value={selectedTechnology}
+            onChange={handleTechnologyChange}
+            className="rounded-lg border border-border bg-card-bg px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:bg-card-bg"
+          >
+            <option value="">All Technologies</option>
+            {technologies.map((tech) => (
+              <option key={tech} value={tech}>
+                {tech}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex flex-1 min-w-[200px] flex-col gap-1.5">
+          <label htmlFor="difficulty-filter" className="text-xs font-semibold uppercase tracking-wide text-muted">
+            Difficulty
+          </label>
+          <select
+            id="difficulty-filter"
+            value={selectedDifficulty}
+            onChange={handleDifficultyChange}
+            className="rounded-lg border border-border bg-card-bg px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:bg-card-bg"
+          >
+            <option value="">All Difficulties</option>
+            {difficulties.map((diff) => (
+              <option key={diff} value={diff}>
+                {diff}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex flex-1 min-w-[180px] flex-col gap-1.5">
+          <label htmlFor="sort-filter" className="text-xs font-semibold uppercase tracking-wide text-muted">
+            Sort By
+          </label>
+          <select
+            id="sort-filter"
+            value={sortBy}
+            onChange={(e) => handleSortChange(e.target.value as "stars" | "name")}
+            className="rounded-lg border border-border bg-card-bg px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:bg-card-bg"
+          >
+            <option value="stars">Stars</option>
+            <option value="name">Name</option>
+          </select>
+        </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2">
-        <label htmlFor="tech-filter" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-          Technology:
-        </label>
-        <select
-          id="tech-filter"
-          value={selectedTechnology}
-          onChange={handleTechnologyChange}
-          className="rounded-lg border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-900 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:border-zinc-400"
+      {hasActiveFilters && (
+        <button
+          onClick={clearFilters}
+          className="text-sm font-medium text-primary hover:text-primary-hover transition-colors"
         >
-          <option value="">All Technologies</option>
-          {technologies.map((tech) => (
-            <option key={tech} value={tech}>
-              {tech}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-2">
-        <label htmlFor="difficulty-filter" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-          Difficulty:
-        </label>
-        <select
-          id="difficulty-filter"
-          value={selectedDifficulty}
-          onChange={handleDifficultyChange}
-          className="rounded-lg border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-900 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:border-zinc-400"
-        >
-          <option value="">All Difficulties</option>
-          {difficulties.map((diff) => (
-            <option key={diff} value={diff}>
-              {diff}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-2 ml-auto">
-        <label htmlFor="sort-filter" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-          Sort by:
-        </label>
-        <select
-          id="sort-filter"
-          value={sortBy}
-          onChange={(e) => handleSortChange(e.target.value as "stars" | "name")}
-          className="rounded-lg border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-900 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:border-zinc-400"
-        >
-          <option value="stars">Stars (High to Low)</option>
-          <option value="name">Name (A-Z)</option>
-        </select>
-      </div>
+          Clear all filters
+        </button>
+      )}
     </div>
   );
 }

@@ -8,69 +8,95 @@ export default function Home() {
 
   return (
     <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-12 sm:px-6 sm:py-16">
-      <section className="flex flex-col items-center gap-6 text-center">
-        <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-foreground sm:text-6xl">
-          Open Source Project Explorer
-        </h1>
-        <p className="max-w-xl text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-          Discover open source projects, filter by domain and difficulty, and
-          bookmark the ones you want to contribute to.
-        </p>
+      <section className="flex flex-col items-center gap-8 text-center">
+        <div className="space-y-4">
+          <h1 className="max-w-2xl bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-6xl animate-gradient">
+            Open Source Project Explorer
+          </h1>
+          <p className="max-w-xl text-lg leading-relaxed text-muted sm:text-xl">
+            Discover open source projects, filter by domain and difficulty, and
+            bookmark the ones you want to contribute to.
+          </p>
+        </div>
         <Link
           href="/projects"
-          className="rounded-md bg-foreground px-6 py-3 text-sm font-medium text-background transition-all duration-200 hover:scale-105 hover:opacity-90 active:scale-95"
+          className="group relative inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-primary/25 transition-all duration-200 hover:scale-105 hover:bg-primary-hover hover:shadow-xl hover:shadow-primary/30 active:scale-95"
         >
           Explore Projects
+          <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
         </Link>
       </section>
 
       <section className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="rounded-lg border border-zinc-200 p-6 transition-all duration-300 hover:shadow-md dark:border-zinc-800 dark:hover:shadow-zinc-900/50">
-          <p className="text-3xl font-semibold text-foreground">
+        <div className="rounded-2xl border border-border bg-card-bg p-6 transition-colors duration-300 hover:border-black dark:hover:border-white">
+          <p className="text-4xl font-bold text-foreground">
             {projects.length}
           </p>
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+          <p className="mt-2 text-sm font-medium text-muted uppercase tracking-wide">
             Projects
           </p>
         </div>
-        <div className="rounded-lg border border-zinc-200 p-6 transition-all duration-300 hover:shadow-md dark:border-zinc-800 dark:hover:shadow-zinc-900/50">
-          <p className="text-3xl font-semibold text-foreground">
+        <div className="rounded-2xl border border-border bg-card-bg p-6 transition-colors duration-300 hover:border-black dark:hover:border-white">
+          <p className="text-4xl font-bold text-foreground">
             {domains.length}
           </p>
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+          <p className="mt-2 text-sm font-medium text-muted uppercase tracking-wide">
             Domains
           </p>
         </div>
-        <div className="rounded-lg border border-zinc-200 p-6 transition-all duration-300 hover:shadow-md dark:border-zinc-800 dark:hover:shadow-zinc-900/50">
-          <p className="text-3xl font-semibold text-foreground">
+        <div className="rounded-2xl border border-border bg-card-bg p-6 transition-colors duration-300 hover:border-black dark:hover:border-white">
+          <p className="text-4xl font-bold text-foreground">
             {totalStars.toLocaleString()}
           </p>
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-            GitHub stars
+          <p className="mt-2 text-sm font-medium text-muted uppercase tracking-wide">
+            GitHub Stars
           </p>
         </div>
       </section>
 
       <section className="mt-16">
-        <h2 className="text-2xl font-semibold tracking-tight text-foreground">
-          Featured Projects
-        </h2>
+        <div className="flex items-center justify-between gap-4">
+          <h2 className="text-2xl font-bold tracking-tight text-foreground">
+            Featured Projects
+          </h2>
+          <Link
+            href="/projects"
+            className="text-sm font-medium text-primary hover:text-primary-hover transition-colors"
+          >
+            View all →
+          </Link>
+        </div>
         <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {featured.map((project) => (
             <li key={project.id}>
               <Link
                 href={`/projects/${project.id}`}
-                className="flex h-full flex-col rounded-lg border border-zinc-200 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-zinc-400 hover:shadow-md dark:border-zinc-800 dark:hover:border-zinc-600 dark:hover:shadow-zinc-900/50"
+                className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card-bg transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-lg dark:hover:shadow-primary/10"
               >
-                <h3 className="font-semibold text-foreground">
-                  {project.name}
-                </h3>
-                <p className="mt-2 line-clamp-3 flex-1 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-                  {project.description}
-                </p>
-                <p className="mt-4 text-xs font-medium uppercase tracking-wide text-zinc-500">
-                  {project.domain}
-                </p>
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors">
+                    {project.name}
+                  </h3>
+                  <p className="mt-1 text-xs font-medium text-muted uppercase tracking-wide">
+                    {project.domain}
+                  </p>
+                  <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-muted">
+                    {project.description}
+                  </p>
+                </div>
+                <div className="flex items-center justify-between border-t border-border bg-card-bg/50 px-5 py-3 backdrop-blur-sm">
+                  <div className="flex items-center gap-1 text-muted">
+                    <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                    </svg>
+                    <span className="text-sm font-medium">{project.stars.toLocaleString()}</span>
+                  </div>
+                  <span className="text-xs font-medium text-muted">
+                    {project.difficulty}
+                  </span>
+                </div>
               </Link>
             </li>
           ))}
@@ -78,17 +104,20 @@ export default function Home() {
       </section>
 
       <section className="mt-16">
-        <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+        <h2 className="text-2xl font-bold tracking-tight text-foreground">
           Browse by Domain
         </h2>
-        <ul className="mt-6 flex flex-wrap gap-2">
+        <ul className="mt-6 flex flex-wrap gap-3">
           {domains.map((domain) => (
             <li key={domain}>
               <Link
                 href={`/projects?domain=${encodeURIComponent(domain)}`}
-                className="rounded-full border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:border-foreground hover:text-foreground dark:border-zinc-800 dark:text-zinc-300"
+                className="group inline-flex items-center gap-2 rounded-full border-2 border-border bg-card-bg px-5 py-2.5 text-sm font-medium text-foreground transition-all duration-200 hover:border-primary hover:bg-primary/10 hover:text-primary"
               >
                 {domain}
+                <svg className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             </li>
           ))}

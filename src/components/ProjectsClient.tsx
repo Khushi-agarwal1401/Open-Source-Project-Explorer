@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import ProjectCard from "@/components/ProjectCard";
+import ProjectCardSkeleton from "@/components/ProjectCardSkeleton";
 import SearchBar from "@/components/SearchBar";
 import FilterBar from "@/components/FilterBar";
 import { projects } from "@/data/projects";
@@ -10,6 +11,7 @@ export default function ProjectsClient() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState({ domain: "", technology: "", difficulty: "" });
   const [sortBy, setSortBy] = useState<"stars" | "name">("stars");
+  const [isLoading, setIsLoading] = useState(false);
 
   const filteredProjects = useMemo(() => {
     let result = projects;
@@ -52,13 +54,23 @@ export default function ProjectsClient() {
     return result;
   }, [searchQuery, filters, sortBy]);
 
+  // Simulate loading state when filters change
+  useEffect(() => {
+    const startTimer = setTimeout(() => setIsLoading(true), 0);
+    const endTimer = setTimeout(() => setIsLoading(false), 300);
+    return () => {
+      clearTimeout(startTimer);
+      clearTimeout(endTimer);
+    };
+  }, [searchQuery, filters, sortBy]);
+
   return (
     <>
       <header className="mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           Projects
         </h1>
-        <p className="mt-2 text-zinc-600 dark:text-zinc-400">
+        <p className="mt-2 text-muted">
           {filteredProjects.length} of {projects.length} open source projects to explore and contribute to.
         </p>
       </header>
@@ -73,7 +85,15 @@ export default function ProjectsClient() {
         onSortChange={setSortBy}
       />
 
-      {filteredProjects.length > 0 ? (
+      {isLoading ? (
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {[...Array(6)].map((_, i) => (
+            <li key={i}>
+              <ProjectCardSkeleton />
+            </li>
+          ))}
+        </ul>
+      ) : filteredProjects.length > 0 ? (
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((project) => (
             <li key={project.id}>
@@ -82,9 +102,26 @@ export default function ProjectsClient() {
           ))}
         </ul>
       ) : (
-        <div className="text-center py-12 text-zinc-500 dark:text-zinc-400">
-          <p className="text-lg">No projects found matching your criteria</p>
-          <p className="mt-2">Try adjusting your search or filters</p>
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <div className="mb-4 rounded-full bg-muted/20 p-4">
+            <svg
+              className="h-12 w-12 text-muted"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+          <h3 className="text-lg font-semibold text-foreground">No projects found</h3>
+          <p className="mt-2 text-muted">
+            Try adjusting your search or filters to find what you&apos;re looking for.
+          </p>
         </div>
       )}
     </>
